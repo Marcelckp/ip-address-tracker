@@ -1,0 +1,134 @@
+.first-half {
+    position: fixed;
+    top: 0;
+    height: 40vh;
+    width: 100%;
+    z-index: -2;
+    object-fit: contain;
+    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+.second-half {
+    position: fixed;
+    margin-top: 40vh;
+    height: 70vh;
+    width: 100%;
+    bottom: 0;
+    background-image: linear-gradient(to right, #453E99, #5F85F1);
+    z-index: -3;
+    object-fit: contain;
+}
+
+.IP-screen {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+}
+
+.IP-screen form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 40px;
+}
+
+.IP-screen form button {
+    border: none;
+    background-color: black;
+    color: white;
+    justify-content: flex-end;
+    width: 20%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.IP-screen form button:hover {
+    background-color: rgb(71, 71, 71)
+}
+
+.Title-IP {
+    color: white;
+    padding: 30px;
+    font-size: 1.7em;
+    width: 100%
+}
+
+.inputFieldIP {
+    padding: 20px;
+    width: 100%;
+    margin-left: -20px;
+    border-radius: 10px;
+    border: none;
+    flex-grow: 2;
+}
+
+.inputFieldIP:focus {
+    outline: none;
+}
+
+.IP-info {
+    margin-top: 20px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 30px;
+    width: 100%;
+}
+
+.IP-info h3 {
+    color: grey;
+    font-size: .8em;
+    letter-spacing: .1em;
+    margin-bottom: 10px;
+}
+
+.IP-info div {
+    margin-bottom: 10px;
+    font-size: 1em
+}
+
+@media only screen and (min-width: 768px) {
+    .Title-IP {
+        font-size: 2.2em
+    }
+    .IP-screen form {
+        max-width: 50%;
+        padding: -10px;
+    }
+    .IP-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 40px
+    }
+    .div-info-4 {
+        border-left: 1px solid rgb(206, 206, 206);
+        padding: 20px;
+        margin-left: -20px;
+        text-align: left;
+    }
+    .div-info-3 {
+        border-left: 1px solid rgb(206, 206, 206);
+        padding: 20px;
+        margin-left: -20px;
+        text-align: left;
+    }
+    .div-info-2 {
+        border-left: 1px solid rgb(206, 206, 206);
+        padding: 20px;
+        margin-left: -20px;
+        text-align: left;
+    }
+    .div-info-1 {
+        padding: 20px;
+        margin-left: -20px;
+        text-align: left;
+    }
+}
