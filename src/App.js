@@ -163,7 +163,7 @@ function App() {
         </div>
       </div>
       { showHint ? <div className='button-information'>
-        <p>Hides Modal to view the map</p>
+        <p>Hides Modal to view the map, Note: if you change your systems appearance from light to dark or visa vera, you need to refresh the page to change the map theme</p>
       </div> : null }
       <div className="button-toggle" onClick={() => {
           if (closeModal) setCloseModal(false);
