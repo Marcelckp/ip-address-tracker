@@ -1,19 +1,19 @@
 import './App.css';
-import { useState, useEffect, useRef } from 'react'
-import { apiKey } from './apiKey';
+import { useState, useEffect, useRef } from 'react';
 import { mapBoxKey } from './apiKey';
+// import { ipstackKey } from './apiKey';
 import axios from 'axios';
 import pattern from './images/pattern-bg.png';
 
 import ReactMapGL, { Marker } from 'react-map-gl';
 
-//components
-import iconLocSVG from './images/icon-location.svg'
-
 function App() {
 
   const [currentUsersData, setCurrentUsersData] = useState(null);
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
+  const [change, setChange] = useState(null);
+
+  const [error, setError] = useState(null);
   
   const [viewport, setViewport] = useState({
     latitude: 37.7577,
@@ -24,6 +24,12 @@ function App() {
 
   const IPsearch = useRef(null);
 
+  const [closeModal, setCloseModal] = useState(null);
+
+  const [showHint, setShowHint] = useState(null);
+
+  console.log(showHint)
+
   useEffect( () => {
     async function data() {
       const ip = await axios.get('https://api.ipify.org/?format=json')
@@ -31,14 +37,16 @@ function App() {
           return res.data.ip;
         })
 
-      // await axios.get(`https://geo.ipify.org/api/v2/country?apiKey=${apiKey}&ipAddress=${ip}`)
-      //   .then((res) => {
-      //     setCurrentUsersData(res.data);
-      //   })
+      await axios.get(`https://ipwhois.app/json/${ip}`)
+        .then((res) => {
+          // console.log(res.data)
+          setCurrentUsersData(res.data)
+        })
       
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           setCurrentUserLocation(position.coords);
+          // console.log(position)
           setViewport({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -62,9 +70,9 @@ function App() {
             default:
               alert('An unknown error has occurred');
           }
-          console.log(error)
+          console.log(error);
         })
-      }else {
+      } else {
         alert('This Browser does no support GeoLocation')
       }
     }
@@ -72,11 +80,34 @@ function App() {
     return data()
   },[]);
 
-  console.log(currentUsersData)
-  console.log(currentUserLocation)
+  console.log(currentUsersData);
+  console.log(currentUserLocation);
 
-  const searchIPinformation = (e) => {
+  const searchIPinformation = async(e) => {
     e.preventDefault();
+
+    if (/\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b/.test(IPsearch.current.value)) {
+
+      await axios.get(`https://ipwhois.app/json/${IPsearch.current.value}`)
+          .then((res) => {
+            // console.log(res.data)
+            setCurrentUsersData(res.data);
+            setViewport({
+              latitude: res.data.latitude,
+              longitude: res.data.longitude,
+              zoom: 13,
+              pitch: 50
+            });
+          }).catch((err) => {
+            console.log(err)
+          })
+
+      setChange(true);
+      setError(false);
+    } else {
+      IPsearch.current.value = '';
+      setError(true);
+    }
   }
 
   return (
@@ -84,11 +115,12 @@ function App() {
     <div className="App">
       <div className='IP-screen'>
         <h1 className='Title-IP'>IP Address Tracker</h1>
-        <form>
-          <input type="text" ref={IPsearch} className='inputFieldIP' placeholder='Search for any IP address/Domain' />
-          <button onClick={(e) => searchIPinformation(e)}><svg xmlns="http://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
+        { error ? <p className='error-markup'>* The IP Address You Entered Is Invalid</p> : null}
+        <form className={`${error ? 'error-input-form' : null}`}>
+          <input type="text" ref={IPsearch} className={`inputFieldIP`} placeholder='Search for any IP address/Domain' />
+          <button onClick={(e) => searchIPinformation(e)}><svg xmlns="https://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
         </form>
-        <div className='IP-info'>
+        <div className={`IP-info ${closeModal ? 'hide-modal' : null}`}>
         { currentUsersData ?
           <>
             <div className='div-info-1'>
@@ -98,28 +130,48 @@ function App() {
 
             <div className='div-info-2'>
               <h3>LOCATION</h3>
-              <h2>{ currentUsersData.location.region }, { currentUsersData.location.country }</h2>
-              <h2>{ currentUsersData.as.asn }</h2>
+              <h2>{ currentUsersData.city }, { currentUsersData.country }, { currentUsersData.region} {currentUsersData.country_code}</h2>
+              <h2>{ currentUsersData.region_code}{ currentUsersData.zip }</h2>
             </div>
 
             <div className='div-info-3'>
               <h3>TIMEZONE</h3>
-              <h2>{ currentUsersData.location.country} - { currentUsersData.location.timezone }</h2>
+              <h2>  <img src={ currentUsersData.country_flag} alt={ currentUsersData.country_name} className='Flag' /> { currentUsersData.location} { currentUsersData.timezone_gmt }</h2>
             </div>
 
             <div className='div-info-4'>
               <h3>ISP</h3>
-              <h2>{ currentUsersData.isp }</h2>
+              <h2>{ currentUsersData.isp}</h2>
+              <h2>{ currentUsersData.type }</h2>
             </div>
+            
           </>
-          : null
+          : 
+            <>
+              <div className='skeleton-info'>
+                <div className='skeleton-div-ipad'></div>
+                <div className='skeleton-div-location'></div>
+                <div className='skeleton-div-timezone'></div>
+                <div className='skeleton-div-isp'></div>
+              </div>
+            </>
         }
         </div>
       </div>
+      { showHint ? <div className='button-information'>
+        <p>Hides Modal to view the map</p>
+      </div> : null }
+      <div className="button-toggle" onClick={() => {
+          if (closeModal) setCloseModal(false);
+          else setCloseModal(true)
+        }} onMouseOver={() => setShowHint(true)} onMouseLeave={() => setShowHint(false)}>
+        { closeModal ? <p>Open Modal</p> : <p>Close Modal</p>}
+      </div>
     </div>
     <div className='first-half' style={{backgroundSize:'cover',backgroundImage: `url(${pattern})` , backgroundPosition: 'center center'}}></div>
+    <div className="skeleton second-half"></div>
     { currentUserLocation ?
-      <div className="second-half" style={{backgroundSize:'cover',backgroundImage: `url(${pattern})`}}>
+      <div className="second-half skeleton" style={{backgroundSize:'cover',backgroundImage: `url(${pattern})`}}>
 
         <ReactMapGL 
         mapboxApiAccessToken={mapBoxKey}
@@ -130,15 +182,19 @@ function App() {
           onViewportChange={(viewport) => setViewport(viewport)}
         >
 
-        <Marker latitude={currentUserLocation.latitude} offsetTop={-50} longitude={currentUserLocation.longitude}>
-            <img src={iconLocSVG} alt='marker'/>
-        </Marker>
-
+        { change ? 
+          <Marker latitude={currentUsersData.latitude} offsetTop={-50} longitude={currentUsersData.longitude}>
+            <svg xmlns="https://www.w3.org/2000/svg" style={{fill: 'red'}} width="46" height="56"><path fillRule="evenodd" d="M39.263 7.673c8.897 8.812 8.966 23.168.153 32.065l-.153.153L23 56 6.737 39.89C-2.16 31.079-2.23 16.723 6.584 7.826l.153-.152c9.007-8.922 23.52-8.922 32.526 0zM23 14.435c-5.211 0-9.436 4.185-9.436 9.347S17.79 33.128 23 33.128s9.436-4.184 9.436-9.346S28.21 14.435 23 14.435z"/></svg>
+          </Marker>
+        :
+          <Marker latitude={currentUserLocation.latitude} offsetTop={-50} longitude={currentUserLocation.longitude}>
+            <svg xmlns="https://www.w3.org/2000/svg" style={{fill: 'red'}} width="46" height="56"><path fillRule="evenodd" d="M39.263 7.673c8.897 8.812 8.966 23.168.153 32.065l-.153.153L23 56 6.737 39.89C-2.16 31.079-2.23 16.723 6.584 7.826l.153-.152c9.007-8.922 23.52-8.922 32.526 0zM23 14.435c-5.211 0-9.436 4.185-9.436 9.347S17.79 33.128 23 33.128s9.436-4.184 9.436-9.346S28.21 14.435 23 14.435z"/></svg>
+          </Marker>
+        }
         </ReactMapGL>
-
       </div>
       : 
-      <div className='second-half' style={{background: 'lightblue'}}>
+      <div className='second-half'>
       </div>
     }
     </>

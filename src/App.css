@@ -12,11 +12,26 @@
     position: fixed;
     margin-top: 40vh;
     height: 70vh;
+    max-height: auto;
+    min-height: 70vh;
     width: 100%;
     bottom: 0;
-    background-image: linear-gradient(to right, #453E99, #5F85F1);
+    /* background-image: linear-gradient(to right, #453E99, #5F85F1); */
     z-index: -3;
     object-fit: contain;
+}
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: #5F85F1;
+    }
+    100% {
+        background-color: #453E99
+    }
 }
 
 .IP-screen {
@@ -36,6 +51,7 @@
     background-color: white;
     border-radius: 10px;
     padding-left: 40px;
+    cursor: pointer;
 }
 
 .IP-screen form button {
@@ -44,8 +60,9 @@
     color: white;
     justify-content: flex-end;
     width: 20%;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
 }
 
 .IP-screen form button:hover {
@@ -54,7 +71,8 @@
 
 .Title-IP {
     color: white;
-    padding: 30px;
+    padding: 20px;
+    padding-top: 10px;
     font-size: 1.7em;
     width: 100%
 }
@@ -66,10 +84,31 @@
     border-radius: 10px;
     border: none;
     flex-grow: 2;
+    cursor: pointer;
 }
 
 .inputFieldIP:focus {
     outline: none;
+}
+
+.error-input-form {
+    border: 2px solid red
+}
+
+.skeleton-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.skeleton-info div {
+    animation: skeleton-loading 1s linear infinite alternate;
+    width: 100%;
+    height: 62px;
+    border-radius: 10px;
+    /* margin-right: 10px */
+    padding-bottom: 10px
 }
 
 .IP-info {
@@ -80,6 +119,14 @@
     padding: 20px;
     padding-top: 30px;
     width: 100%;
+    transition: all 0.5s ease;
+    display: block
+}
+
+.Flag {
+    width: 30px;
+    height: 20px;
+    margin-right: 10px
 }
 
 .IP-info h3 {
@@ -94,7 +141,130 @@
     font-size: 1em
 }
 
+.error-markup {
+    color: red;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.error-svg {
+    fill: red;
+}
+
+.button-toggle {
+    background-color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 8px;
+    left: 8px;
+    font-weight: bold;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.button-toggle:hover {
+    background-color: rgb(71, 71, 71);
+    color: white
+}
+
+.button-information {
+    background-color: white;
+    width: 100px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 8px;
+    position: fixed;
+    bottom: 50px;
+    left: 8px
+}
+
+.button-information::after {
+    content: " ";
+    width: 2px;
+    height: 2px;
+    border-top: 10px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    left: 40%;
+    top: 110%;
+    margin-top: -10px;
+    /* margin-left: -50px; */
+}
+
+.hide-modal {
+    display: none;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    transition-timing-function: ease;
+    transition: all 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .IP-info {
+        background-color: rgb(88, 88, 88)
+    }
+    .IP-info h3 {
+        color: white;
+    }
+     ::placeholder {
+        color: white
+    }
+    .IP-screen form {
+        background-color: rgb(88, 88, 88)
+    }
+    .IP-screen form input {
+        background-color: rgb(88, 88, 88);
+        color: white;
+    }
+    .button-toggle {
+        background-color: rgb(88, 88, 88);
+        color: white
+    }
+    .button-toggle:hover {
+        background-color: rgb(133, 133, 133)
+    }
+    .IP-screen form button:hover {
+        background-color: rgb(133, 133, 133)
+    }
+    .button-information {
+        background-color: rgb(88, 88, 88);
+        color: white
+    }
+    .button-information::after {
+        border-top: 10px solid rgb(88, 88, 88);
+    }
+}
+
 @media only screen and (min-width: 768px) {
+    .skeleton-info {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%
+    }
+    .skeleton-info div {
+        width: 80%;
+        height: 120px;
+        margin-bottom: -10px;
+        margin-left: 20px
+    }
+    .first-half {
+        height: 30vh
+    }
+    .error-markup {
+        font-size: 1.5em
+    }
     .Title-IP {
         font-size: 2.2em
     }
@@ -118,17 +288,20 @@
         border-left: 1px solid rgb(206, 206, 206);
         padding: 20px;
         margin-left: -20px;
+        padding-right: 40px;
         text-align: left;
     }
     .div-info-2 {
         border-left: 1px solid rgb(206, 206, 206);
         padding: 20px;
         margin-left: -20px;
+        padding-right: 40px;
         text-align: left;
     }
     .div-info-1 {
         padding: 20px;
         margin-left: -20px;
+        padding-right: 40px;
         text-align: left;
     }
 }
