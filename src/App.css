@@ -160,8 +160,8 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom: 8px;
-    left: 8px;
+    bottom: 7px;
+    left: 7px;
     font-weight: bold;
     padding: 0 5px;
     cursor: pointer;
@@ -183,7 +183,7 @@
     border-radius: 8px;
     position: fixed;
     bottom: 50px;
-    left: 8px
+    left: 7px
 }
 
 .button-information::after {

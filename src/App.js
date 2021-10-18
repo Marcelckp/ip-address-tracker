@@ -28,7 +28,7 @@ function App() {
 
   const [showHint, setShowHint] = useState(null);
 
-  console.log(showHint)
+  const [darkMap, setDarkMap] = useState(null)
 
   useEffect( () => {
     async function data() {
@@ -77,11 +77,15 @@ function App() {
       }
     }
 
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  setDarkMap(userPrefersDark)
+
     return data()
   },[]);
 
-  console.log(currentUsersData);
-  console.log(currentUserLocation);
+  // console.log(currentUsersData);
+  // console.log(currentUserLocation);
 
   const searchIPinformation = async(e) => {
     e.preventDefault();
@@ -176,7 +180,7 @@ function App() {
         <ReactMapGL 
         mapboxApiAccessToken={mapBoxKey}
           {...viewport}
-          mapStyle={'mapbox://styles/mapbox/dark-v9' || "mapbox://styles/mapbox/light-v9"}
+          mapStyle={`${ darkMap ? 'mapbox://styles/mapbox/dark-v9' : 'mapbox://styles/mapbox/light-v8'}`}
           width='100%'
           height='100%'
           onViewportChange={(viewport) => setViewport(viewport)}
