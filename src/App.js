@@ -10,7 +10,6 @@ import ReactMapGL, { Marker } from 'react-map-gl';
 function App() {
 
   const [currentUsersData, setCurrentUsersData] = useState(null);
-  const [currentUserLocation, setCurrentUserLocation] = useState(null);
   const [change, setChange] = useState(null);
 
   const [error, setError] = useState(null);
@@ -40,41 +39,14 @@ function App() {
       await axios.get(`https://ipwhois.app/json/${ip}`)
         .then((res) => {
           // console.log(res.data)
-          setCurrentUsersData(res.data)
-        })
-      
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setCurrentUserLocation(position.coords);
-          // console.log(position)
+          setCurrentUsersData(res.data);
           setViewport({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            latitude: res.data.latitude,
+            longitude: res.data.longitude,
             zoom: 13,
             pitch: 50
           })
-        }, (error) => {
-          switch(error.code) {
-            case error.PERMISSION_DENIED:
-              alert('User Denied the request for Geolocation.');
-              break;
-            case error.POSITION_UNAVAILABLE:
-              alert('Location information is unavailable.');
-              break;
-            case error.TIMEOUT:
-              alert('The request to get user location has timed out');
-              break;
-            case error.UNKNOWN_ERROR:
-              alert('An unknown error has occurred');
-              break;
-            default:
-              alert('An unknown error has occurred');
-          }
-          console.log(error);
         })
-      } else {
-        alert('This Browser does no support GeoLocation')
-      }
     }
 
   const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -83,9 +55,6 @@ function App() {
 
     return data()
   },[]);
-
-  // console.log(currentUsersData);
-  // console.log(currentUserLocation);
 
   const searchIPinformation = async(e) => {
     e.preventDefault();
@@ -140,7 +109,7 @@ function App() {
 
             <div className='div-info-3'>
               <h3>TIMEZONE</h3>
-              <h2>  <img src={ currentUsersData.country_flag} alt={ currentUsersData.country_name} className='Flag' /> { currentUsersData.location} { currentUsersData.timezone_gmt }</h2>
+              <h2>  <img src={ currentUsersData.country_flag} alt={` country ${ currentUsersData.country_name }`} className='Flag' /> { currentUsersData.location} { currentUsersData.timezone_gmt }</h2>
             </div>
 
             <div className='div-info-4'>
@@ -174,7 +143,7 @@ function App() {
     </div>
     <div className='first-half' style={{backgroundSize:'cover',backgroundImage: `url(${pattern})` , backgroundPosition: 'center center'}}></div>
     <div className="skeleton second-half"></div>
-    { currentUserLocation ?
+    { currentUsersData ?
       <div className="second-half skeleton" style={{backgroundSize:'cover',backgroundImage: `url(${pattern})`}}>
 
         <ReactMapGL 
@@ -191,7 +160,7 @@ function App() {
             <svg xmlns="https://www.w3.org/2000/svg" style={{fill: 'red'}} width="46" height="56"><path fillRule="evenodd" d="M39.263 7.673c8.897 8.812 8.966 23.168.153 32.065l-.153.153L23 56 6.737 39.89C-2.16 31.079-2.23 16.723 6.584 7.826l.153-.152c9.007-8.922 23.52-8.922 32.526 0zM23 14.435c-5.211 0-9.436 4.185-9.436 9.347S17.79 33.128 23 33.128s9.436-4.184 9.436-9.346S28.21 14.435 23 14.435z"/></svg>
           </Marker>
         :
-          <Marker latitude={currentUserLocation.latitude} offsetTop={-50} longitude={currentUserLocation.longitude}>
+          <Marker latitude={currentUsersData.latitude} offsetTop={-50} longitude={currentUsersData.longitude}>
             <svg xmlns="https://www.w3.org/2000/svg" style={{fill: 'red'}} width="46" height="56"><path fillRule="evenodd" d="M39.263 7.673c8.897 8.812 8.966 23.168.153 32.065l-.153.153L23 56 6.737 39.89C-2.16 31.079-2.23 16.723 6.584 7.826l.153-.152c9.007-8.922 23.52-8.922 32.526 0zM23 14.435c-5.211 0-9.436 4.185-9.436 9.347S17.79 33.128 23 33.128s9.436-4.184 9.436-9.346S28.21 14.435 23 14.435z"/></svg>
           </Marker>
         }
