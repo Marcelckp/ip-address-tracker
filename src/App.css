@@ -2,6 +2,7 @@
     position: fixed;
     top: 0;
     height: 40vh;
+    max-height: 250px;
     width: 100%;
     z-index: -2;
     object-fit: contain;
@@ -11,7 +12,7 @@
 .second-half {
     position: fixed;
     margin-top: 40vh;
-    height: 70vh;
+    height: 100vh;
     max-height: auto;
     min-height: 70vh;
     width: 100%;
@@ -314,5 +315,8 @@
         margin-left: -20px;
         padding-right: 40px;
         text-align: left;
+    }
+    .first-half {
+        max-height: 300px
     }
 }
