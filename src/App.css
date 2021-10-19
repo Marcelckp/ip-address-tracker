@@ -169,14 +169,13 @@
     font-weight: bold;
     padding: 0 5px;
     cursor: pointer;
-    transition: all 0.5 ease
+    transition: all 0.5s ease
 }
 
 .button-toggle:hover {
     background-color: rgb(71, 71, 71);
     color: white;
-    transition-timing-function: ease;
-    transition: all 0.5 ease
+    transition: all 0.5s ease;
 }
 
 .button-information {
@@ -192,8 +191,7 @@
     position: fixed;
     bottom: 50px;
     left: 7px;
-    transition: all 0.5 ease;
-    transition-timing-function: ease
+    transition: all 0.5s ease;
 }
 
 .button-information::after {
