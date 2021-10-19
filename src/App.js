@@ -84,8 +84,8 @@ function App() {
     return data()
   },[]);
 
-  // console.log(currentUsersData);
-  // console.log(currentUserLocation);
+  console.log(currentUsersData);
+  console.log(currentUserLocation);
 
   const searchIPinformation = async(e) => {
     e.preventDefault();

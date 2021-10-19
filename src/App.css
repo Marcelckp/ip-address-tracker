@@ -63,10 +63,12 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     cursor: pointer;
+    transition: all 0.5s ease
 }
 
 .IP-screen form button:hover {
-    background-color: rgb(71, 71, 71)
+    background-color: rgb(71, 71, 71);
+    transition: all 0.5s ease
 }
 
 .Title-IP {
@@ -108,7 +110,7 @@
     height: 62px;
     border-radius: 10px;
     /* margin-right: 10px */
-    padding-bottom: 10px
+    padding-bottom: 10px;
 }
 
 .IP-info {
@@ -138,7 +140,9 @@
 
 .IP-info div {
     margin-bottom: 10px;
-    font-size: 1em
+    font-size: 1em;
+    opacity: 1;
+    transition: opacity 1s
 }
 
 .error-markup {
@@ -165,11 +169,14 @@
     font-weight: bold;
     padding: 0 5px;
     cursor: pointer;
+    transition: all 0.5 ease
 }
 
 .button-toggle:hover {
     background-color: rgb(71, 71, 71);
-    color: white
+    color: white;
+    transition-timing-function: ease;
+    transition: all 0.5 ease
 }
 
 .button-information {
@@ -181,22 +188,25 @@
     align-items: center;
     padding: 5px 10px;
     border-radius: 8px;
+    border: 2px solid rgb(88, 88, 88);
     position: fixed;
     bottom: 50px;
-    left: 7px
+    left: 7px;
+    transition: all 0.5 ease;
+    transition-timing-function: ease
 }
 
 .button-information::after {
     content: " ";
     width: 2px;
     height: 2px;
-    border-top: 10px solid white;
+    border-top: 10px solid rgb(88, 88, 88);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid transparent;
     position: absolute;
-    left: 40%;
-    top: 107%;
+    left: 18%;
+    top: 108%;
     margin-top: -10px;
     /* margin-left: -50px; */
 }
@@ -240,10 +250,11 @@
     }
     .button-information {
         background-color: rgb(88, 88, 88);
-        color: white
+        color: white;
+        border: 2px solid white
     }
     .button-information::after {
-        border-top: 10px solid rgb(88, 88, 88);
+        border-top: 10px solid white;
     }
 }
 
