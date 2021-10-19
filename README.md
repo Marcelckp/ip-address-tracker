@@ -35,8 +35,8 @@ Users should be able to:
 Note: in the screenshots I changed my system appearance to change/alter the theme of the site from a light mode to a dark mode, You can go on the website and give it a try!
 
 ![](./src/images/Ip-screenshot-dark.png)
-![](./src/images/Ip-screenshot-light.png)
-![](./src/images/Ip-screenshot-error.png)
+![](./src/images/ip-screenshot-light.png)
+![](./src/images/ip-screenshot-error.png)
 
 ### Links
 
