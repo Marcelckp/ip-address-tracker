@@ -2,7 +2,7 @@
 
 This is a solution to the [IP address tracker challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ip-address-tracker-I8-0yYAH0). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-Note: best browser to test/use the site is Google Chrome
+Note: best browser to test/use the site is Google Chrome && to use the map services you have to allow location services on your browser
 
 ## Table of contents
 
