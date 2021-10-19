@@ -91,7 +91,7 @@ function App() {
         { error ? <p className='error-markup'>* The IP Address You Entered Is Invalid</p> : null}
         <form className={`${error ? 'error-input-form' : null}`}>
           <input type="text" ref={IPsearch} className={`inputFieldIP`} placeholder='Search for any IP address/Domain' />
-          <button onClick={(e) => searchIPinformation(e)}><svg xmlns="https://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
+          <button className='input-btn' onClick={(e) => searchIPinformation(e)} alt='submit button' ><svg xmlns="https://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
         </form>
         <div className={`IP-info ${closeModal ? 'hide-modal' : null}`}>
         { currentUsersData ?
@@ -109,7 +109,10 @@ function App() {
 
             <div className='div-info-3'>
               <h3>TIMEZONE</h3>
-              <h2>  <img src={ currentUsersData.country_flag} alt={` country ${ currentUsersData.country_name }`} className='Flag' /> { currentUsersData.location} { currentUsersData.timezone_gmt }</h2>
+              <div>
+                <img src={ currentUsersData.country_flag} alt={` country ${ currentUsersData.country_name }`} className='Flag' /> 
+                <h2>{ currentUsersData.location} { currentUsersData.timezone_gmt }</h2>
+              </div>              
             </div>
 
             <div className='div-info-4'>
@@ -144,7 +147,7 @@ function App() {
     <div className='first-half' style={{backgroundSize:'cover',backgroundImage: `url(${pattern})` , backgroundPosition: 'center center'}}></div>
     <div className="skeleton second-half"></div>
     { currentUsersData ?
-      <div className="second-half skeleton" style={{backgroundSize:'cover',backgroundImage: `url(${pattern})`}}>
+      <div className="second-half skeleton" style={{backgroundSize:'cover',backgroundImage: `url(${pattern})`, backgroundPosition: 'center center'}}>
 
         <ReactMapGL 
         mapboxApiAccessToken={mapBoxKey}
