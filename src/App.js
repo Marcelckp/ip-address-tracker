@@ -108,8 +108,7 @@ function App() {
 
             <div className='div-info-2'>
               <h3>LOCATION</h3>
-              <h2>{ currentUsersData.city }, { currentUsersData.country }, { currentUsersData.region} {currentUsersData.country_code}</h2>
-              <h2>{ currentUsersData.region_code}{ currentUsersData.zip }</h2>
+              <h2>{ currentUsersData.city }, { currentUsersData.country }, { currentUsersData.region}</h2>
             </div>
 
             <div className='div-info-3'>
