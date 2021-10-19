@@ -63,14 +63,19 @@ function App() {
 
       await axios.get(`https://ipwhois.app/json/${IPsearch.current.value}`)
           .then((res) => {
-            // console.log(res.data)
-            setCurrentUsersData(res.data);
-            setViewport({
-              latitude: res.data.latitude,
-              longitude: res.data.longitude,
-              zoom: 13,
-              pitch: 50
-            });
+            console.log(res.data)
+            //adds a range reserved catcher so that error aren't thrown in the application
+            if (res.data.message === 'reserved range') {
+              return alert(`Error: ${res.data.message} That request is reserved and cannot be made.`)
+            } else {
+              setCurrentUsersData(res.data);
+              setViewport({
+                latitude: res.data.latitude,
+                longitude: res.data.longitude,
+                zoom: 13,
+                pitch: 50
+              });
+            }
           }).catch((err) => {
             console.log(err)
           })
