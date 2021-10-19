@@ -96,7 +96,7 @@ function App() {
         { error ? <p className='error-markup'>* The IP Address You Entered Is Invalid</p> : null}
         <form className={`${error ? 'error-input-form' : null}`}>
           <input type="text" ref={IPsearch} className={`inputFieldIP`} placeholder='Search for any IP address/Domain' />
-          <button className='input-btn' onClick={(e) => searchIPinformation(e)} alt='submit button' ><svg xmlns="https://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
+          <button className='input-btn' onClick={(e) => searchIPinformation(e)} aria-label='submit button' ><svg xmlns="https://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6"/></svg></button>
         </form>
         <div className={`IP-info ${closeModal ? 'hide-modal' : null}`}>
         { currentUsersData ?
