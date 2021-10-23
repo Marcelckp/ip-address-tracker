@@ -63,7 +63,8 @@ function App() {
 
       await axios.get(`https://ipwhois.app/json/${IPsearch.current.value}`)
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
+            
             //adds a range reserved catcher so that error aren't thrown in the application
             if (res.data.message === 'reserved range') {
               return alert(`Error: ${res.data.message} That request is reserved and cannot be made.`)
